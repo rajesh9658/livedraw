@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      livedraw:
+        specifier: 'file:'
+        version: 'file:'
     devDependencies:
       prettier:
         specifier: ^3.2.5
@@ -18,39 +22,14 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
-  apps/docs:
+  apps/http backend:
     dependencies:
-      '@repo/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      next:
-        specifier: ^15.1.0
-        version: 15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@types/node':
-        specifier: ^20
-        version: 20.17.6
-      '@types/react':
-        specifier: 18.3.1
-        version: 18.3.1
-      '@types/react-dom':
-        specifier: 18.3.0
-        version: 18.3.0
-      typescript:
-        specifier: 5.5.4
-        version: 5.5.4
+      http-backend:
+        specifier: 'file:'
+        version: file:apps/http backend
 
   apps/web:
     dependencies:
@@ -86,7 +65,20 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
+  apps/websocket backend:
+    dependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      websocket-backend:
+        specifier: 'file:'
+        version: file:apps/websocket backend
+
   packages/eslint-config:
+    dependencies:
+      '@repo/eslint-config':
+        specifier: 'file:'
+        version: 'link:'
     devDependencies:
       '@eslint/js':
         specifier: ^9.17.0
@@ -122,7 +114,11 @@ importers:
         specifier: ^8.15.0
         version: 8.15.0(eslint@9.15.0)(typescript@5.5.4)
 
-  packages/typescript-config: {}
+  packages/typescript-config:
+    dependencies:
+      '@repo/typescript-config':
+        specifier: 'file:'
+        version: 'link:'
 
   packages/ui:
     dependencies:
@@ -1116,6 +1112,9 @@ packages:
   header-case@1.0.1:
     resolution: {integrity: sha512-i0q9mkOeSuhXw6bGgiQCCBgY/jlZuV/7dZXyZ9c6LcBrqwvT8eT719E9uxE5LiZftdl+z81Ugbg/VvXV4OJOeQ==}
 
+  http-backend@file:apps/http backend:
+    resolution: {directory: apps/http backend, type: directory}
+
   http-proxy-agent@7.0.2:
     resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
     engines: {node: '>= 14'}
@@ -1352,6 +1351,10 @@ packages:
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
+
+  'livedraw@file:':
+    resolution: {directory: '', type: directory}
+    engines: {node: '>=18'}
 
   locate-path@6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
@@ -2013,6 +2016,9 @@ packages:
 
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
+
+  websocket-backend@file:apps/websocket backend:
+    resolution: {directory: apps/websocket backend, type: directory}
 
   which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
@@ -3192,6 +3198,10 @@ snapshots:
       no-case: 2.3.2
       upper-case: 1.1.3
 
+  http-backend@file:apps/http backend:
+    dependencies:
+      '@repo/typescript-config': link:packages/typescript-config
+
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.1
@@ -3441,6 +3451,8 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  'livedraw@file:': {}
 
   locate-path@6.0.0:
     dependencies:
@@ -4184,6 +4196,10 @@ snapshots:
   wcwidth@1.0.1:
     dependencies:
       defaults: 1.0.4
+
+  websocket-backend@file:apps/websocket backend:
+    dependencies:
+      '@repo/typescript-config': link:packages/typescript-config
 
   which-boxed-primitive@1.0.2:
     dependencies:
