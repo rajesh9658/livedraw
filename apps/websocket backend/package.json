@@ -5,8 +5,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/index.js",
-    "build": "tsc -b",    
+    "build": "tsc -b",
     "dev": "npm run build && npm run start"
+  },"devDependencies": {
+    "@repo/backend-com": "workspace:*",
+    "@repo/typescript-config": "workspace:*"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +17,9 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    
+    "@types/ws": "^8.5.13",
     "websocket-backend": "file:",
-    "@repo/typescript-config":"workspace:*"
+    "ws": "^8.18.0"
   }
 }
