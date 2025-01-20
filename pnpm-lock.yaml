@@ -209,6 +209,16 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
+  packages/zod-types:
+    dependencies:
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+
 packages:
 
   '@babel/runtime-corejs3@7.26.0':
