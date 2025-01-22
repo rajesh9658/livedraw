@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "exports":{
-    "zod-types":"./src/index.ts"
+    "./types":"./src/index.ts"
 
   },
   "scripts": {
