@@ -98,12 +98,21 @@ importers:
 
   apps/websocket backend:
     dependencies:
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@types/jsonwebtoken':
+        specifier: ^9.0.7
+        version: 9.0.7
       '@types/ws':
         specifier: ^8.5.13
         version: 8.5.13
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
       websocket-backend:
         specifier: 'file:'
-        version: 'link:'
+        version: file:apps/websocket backend
       ws:
         specifier: ^8.18.0
         version: 8.18.0
@@ -2400,6 +2409,9 @@ packages:
 
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
+
+  websocket-backend@file:apps/websocket backend:
+    resolution: {directory: apps/websocket backend, type: directory}
 
   which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
@@ -4943,6 +4955,17 @@ snapshots:
   wcwidth@1.0.1:
     dependencies:
       defaults: 1.0.4
+
+  websocket-backend@file:apps/websocket backend:
+    dependencies:
+      '@repo/db': link:packages/db
+      '@types/jsonwebtoken': 9.0.7
+      '@types/ws': 8.5.13
+      jsonwebtoken: 9.0.2
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   which-boxed-primitive@1.0.2:
     dependencies:

@@ -76,10 +76,10 @@ app.post('/signin', async(req,res)=>{
     return;
   }
 
-  const token = await Jwt.sign({
-    userid:user.id
+  const token = Jwt.sign({
+    userId:user?.id
 
-  },JWT_SECRET,{expiresIn:"10h"})
+  },JWT_SECRET)
   
   res.json({
     message:"user found",
@@ -89,7 +89,7 @@ app.post('/signin', async(req,res)=>{
 })
 
 //room logic
-app.post('/room/create',middleware,async(req:Request,res:Response,next:NextFunction)=>{
+app.post('/room/create',middleware,async(req:Request,res:Response)=>{
   const parseddata = roomschema.safeParse(req.body);
 
   if( !parseddata.success){
@@ -101,13 +101,14 @@ app.post('/room/create',middleware,async(req:Request,res:Response,next:NextFunct
   }
   //@ts-ignore
   const userId = req.userId;
+  // console.log(userId);
  try {
   const room = await prismaClient.room.create({
     data:{
       name:parseddata.data.name,
       description:parseddata.data.description,
       slug:parseddata.data.slug,
-      adminId:userId,
+      adminId:userId.toString(),
     }
   })
   res.json({
