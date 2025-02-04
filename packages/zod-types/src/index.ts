@@ -4,7 +4,7 @@ export const userschema = z.object({
     name:z.string().min(3).max(10),
     fname:z.string().min(5).max(50),
     email:z.string().email(),
-    password:z.string().min(5).max(15).regex(/^[a-zA-Z0-9]{3,30}$/),
+    password: z.string().min(5).max(15).regex(/^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{5,15}$/),
 })
 
 

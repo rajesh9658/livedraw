@@ -1,20 +1,22 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { signUp } from "@/app/action/auth"
+import { signUp } from "../../app/action/auth"
 
-export function SignUp() {
+interface SignUpProps {
+  onSuccessfulSignUp: (email: string) => void
+}
+
+export function SignUp({ onSuccessfulSignUp }: SignUpProps) {
   const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
 
   async function handleSubmit(formData: FormData) {
     const result = await signUp(formData)
     if (result.error) {
       setError(result.error)
     } else {
-      router.push("/dashboard")
+      const email = formData.get("email") as string
+      onSuccessfulSignUp(email)
     }
   }
 
@@ -61,18 +63,10 @@ export function SignUp() {
           />
         </div>
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button type="submit" className="w-full bg-primary text-primary-foreground py-2 rounded hover:bg-primary/90">
+        <button type="submit" className="w-full bg-primary text-primary-foreground py-2 rounded hover:opacity-80">
           Sign Up
         </button>
       </form>
-      <div className="mt-4">
-        {/* <p className="text-sm text-muted-foreground">
-          Already have an account?{" "}
-          <Link href="/sign-in" className="text-primary hover:underline">
-            Sign in
-          </Link>
-        </p> */}
-      </div>
     </div>
   )
 }

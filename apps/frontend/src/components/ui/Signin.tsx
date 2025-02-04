@@ -1,19 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { signIn } from "@/app/action/auth"
+import { signIn } from "../../app/action/auth"
 
-export function SignIn() {
+interface SignInProps {
+  newUser: { email: string } | null
+}
+
+export function SignIn({ newUser }: SignInProps) {
   const [error, setError] = useState<string | null>(null)
+  const [email, setEmail] = useState("")
   const router = useRouter()
+
+  useEffect(() => {
+    if (newUser) {
+      setEmail(newUser.email)
+    }
+  }, [newUser])
 
   async function handleSubmit(formData: FormData) {
     const result = await signIn(formData)
     if (result.error) {
       setError(result.error)
     } else {
+      // Store user data in localStorage
+      // localStorage.setItem("user", JSON.stringify(result.user))
       router.push("/dashboard")
     }
   }
@@ -21,6 +34,7 @@ export function SignIn() {
   return (
     <div className="w-full max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-4">Sign In</h2>
+      {newUser && <p className="mb-4 text-green-500">Account created successfully! Please sign in.</p>}
       <p className="mb-4 text-muted-foreground">Enter your email and password to sign in.</p>
       <form action={handleSubmit} className="space-y-4">
         <div>
@@ -32,6 +46,8 @@ export function SignIn() {
             name="email"
             type="email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full px-3 py-2 border rounded bg-background text-foreground"
             placeholder="Your email"
           />
@@ -49,7 +65,7 @@ export function SignIn() {
           />
         </div>
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button type="submit" className="w-full bg-primary text-primary-foreground py-2 rounded hover:bg-primary/90">
+        <button type="submit" className="w-full bg-primary text-primary-foreground py-2 rounded hover:opacity-80">
           Sign In
         </button>
       </form>
@@ -57,12 +73,6 @@ export function SignIn() {
         <Link href="/forgot-password" className="block text-sm text-primary hover:underline">
           Forgot password?
         </Link>
-        {/* <p className="text-sm text-muted-foreground">
-          Don't have an account?{" "}
-          <Link href="/sign-up" className="text-primary hover:underline">
-            Sign up
-          </Link>
-        </p> */}
       </div>
     </div>
   )
