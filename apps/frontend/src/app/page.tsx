@@ -1,10 +1,11 @@
 'use client';
 
-import { ArrowRight, Compass, Layers, Share2, Wand2, Users, Star, Sparkles } from "lucide-react";
+import { ArrowRight, Compass, Layers, Share2, Wand2, Users, Star, Sparkles, Router } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
+import { ThemeToggle } from "@/components/ui/themetogle";
 
 function HeroCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -74,6 +75,9 @@ function HeroCanvas() {
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
+      <div className="absolute top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent z-0" />
@@ -92,11 +96,13 @@ export default function Home() {
               Create, share, and optimize your Path of Exile skill tree builds with our intuitive visual editor.
             </p>
             <div className="flex gap-4 justify-center items-center flex-col sm:flex-row">
+              <Link href="auth">
               <Button size="lg" className="gap-2 backdrop-blur-sm">
                 Start Building <ArrowRight className="w-5 h-5" />
               </Button>
+              </Link>
               <Button size="lg" variant="outline" className="gap-2 backdrop-blur-sm">
-                View Examples
+                Github
               </Button>
             </div>
             <div className="mt-12 flex items-center justify-center gap-8 text-muted-foreground">

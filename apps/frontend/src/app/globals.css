@@ -3,35 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-  --primary: #000000;
-  --primary-foreground: #ffffff;
-  --muted: #f3f4f6;
-  --muted-foreground: #6b7280;
-  --border: rgba(0, 0, 0, 0.1);
-  --ring: #000000;
-  --radius: 0.5rem;
+  --background: 255, 255, 255; /* RGB values for white */
+  --foreground: 0, 0, 0; /* RGB values for black */
+  --primary: 0, 0, 0; /* RGB values for black */
+  --primary-foreground: 255, 255, 255; /* RGB values for white */
+  --muted: 243, 244, 246; /* RGB values for gray-100 */
+  --muted-foreground: 107, 114, 128; /* RGB values for gray-500 */
+  --border: 0, 0, 0; /* RGB values for black */
+  --ring: 0, 0, 0; /* RGB values for black */
+  --radius: 0.5rem; /* Border radius */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ffffff;
-    --primary: #ffffff;
-    --primary-foreground: #000000;
-    --muted: #1f2937;
-    --muted-foreground: #9ca3af;
-    --border: rgba(255, 255, 255, 0.1);
-    --ring: #ffffff;
-  }
+.dark {
+  --background: 0, 0, 0; /* RGB values for black */
+  --foreground: 255, 255, 255; /* RGB values for white */
+  --primary: 255, 255, 255; /* RGB values for white */
+  --primary-foreground: 0, 0, 0; /* RGB values for black */
+  --muted: 31, 41, 55; /* RGB values for gray-800 */
+  --muted-foreground: 156, 163, 175; /* RGB values for gray-400 */
+  --border: 255, 255, 255; /* RGB values for white */
+  --ring: 255, 255, 255; /* RGB values for white */
 }
 
-/* @layer base {
+/* Apply custom properties to elements */
+@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
-} */
+}

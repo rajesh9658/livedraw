@@ -34,6 +34,7 @@ model room {
   adminId      String
   admin        User @relation(fields: [adminId],references: [id])
   chats        chat[]
+  drawings     Drawing[]
 
 }
 
@@ -46,4 +47,14 @@ model chat {
   room         room @relation(fields: [roomId],references: [id])
   user         User @relation(fields: [userId],references: [id])
 
+}
+
+
+model Drawing {
+  id        Int     @id @default(autoincrement())
+  roomId    Int
+  room      room    @relation(fields: [roomId], references: [id])
+  data      Json    // Stores the Excalidraw elements in JSON format
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
