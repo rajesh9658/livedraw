@@ -1,0 +1,85 @@
+// src/components/ui/TextInputOverlay.tsx
+"use client";
+import React, { useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
+import styles from "./TextInputOverlay.module.css";
+
+interface TextInputOverlayProps {
+  x: number;
+  color: string;
+  y: number;
+  text: string;
+  onChange: (value: string) => void;
+  onCommit: () => void;
+  canvasElement: HTMLCanvasElement | null;
+}
+
+const TextInputOverlay: React.FC<TextInputOverlayProps> = ({
+  x,
+  y,
+  color,
+  text,
+  onChange,
+  onCommit,
+  canvasElement,
+}) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  if (!canvasElement) {
+    return null;
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        inputRef.current.select();
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
+        onCommit();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      onCommit(); // Ensure text is committed before unmounting
+    };
+  }, [onCommit]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onCommit();
+    }
+  };
+
+  const canvasRect = canvasElement.getBoundingClientRect();
+  const computedTop = canvasRect.top + y + window.scrollY;
+  const computedLeft = canvasRect.left + x + window.scrollX;
+
+  return ReactDOM.createPortal(
+    <input
+      ref={inputRef}
+      type="text"
+      value={text}
+      onChange={(e) => onChange(e.target.value)}
+      onKeyDown={handleKeyDown}
+      title="Enter text"
+      className={`${styles.inputOverlay} ${styles.textInput} absolute bg-transparent border-none outline-none caret-white w-full`}
+      style={{
+        color: color,
+        top: `${computedTop}px`,
+        left: `${computedLeft}px`,
+        position: "absolute",
+      }}
+    />,
+    document.body
+  );
+};
+
+export default TextInputOverlay;

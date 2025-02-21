@@ -1,45 +1,66 @@
-"use server"
+"use client"
 
 import { BACKEND_URL } from "@/urlconfig"
 import axios from "axios"
+import{loginschema,userschema} from "@repo/zod-types/types";
 
 export async function signIn(formData: FormData) {
-  // This is a mock implementation. Replace with your actual authentication logic.
-  const email = formData.get("email")
-  const password = formData.get("password")
+  const email = formData.get("email") as string | null
+  const password = formData.get("password") as string | null
 
-  // Simulate an API call
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+ 
+  const parsedData = loginschema.safeParse({email,password})
+  if (!parsedData.success) {
+    return { error: parsedData.error.errors.map((err)=> err.message).join(", ") }
+  }
 
-  if (email === "user@example.com" && password === "password") {
-    return { success: true }
-  } else {
-    return { error: "Invalid email or password" }
+  try {
+    const response = await axios.post(`${BACKEND_URL}/signin`, {
+      email: parsedData.data.email,
+      password: parsedData.data.password
+    })
+    // console.log(response.status)
+    if (response.data &&response.data.token) {
+      localStorage.setItem("token",response.data.token);
+      return { success: true }
+    } else {
+      return { error: "Invalid email or password" }
+    }
+  } catch (error) {
+    console.error(error)
+    return { error: "invalid email or password" }
   }
 }
+
 
 export async function signUp(formData: FormData) {
-  // This is a mock implementation. Replace with your actual sign-up logic.
-  const name = formData.get("name") as string
-  const email = formData.get("email")
-  const password = formData.get("password")
-  const fname = formData.get("name")
+  const fname = formData.get("name") as string | null
+  const email = formData.get("email") as string | null
+  const password = formData.get("password") as string | null
+  const name =fname?.trim().split(" ")[0].toString()
 
-  // Simulate an API call
-  console.log(password);
- const response = await axios.post(`${BACKEND_URL}/signup`,{
-  name: (name as string).split(" ")[0],
-  email:email,
-  password:password,
-  fname:fname?.toString(),
- })
+  // console.log(name,email,password,fname)
+  const parsedData = userschema.safeParse({name,email,password,fname})
+  if (!parsedData.success) {
+    console.log(parsedData.error.errors)
+    return { error: parsedData.error.errors.map((err)=> err.message).join(", ") }
+  }
 
- console.log(response.status);
-  // In a real application, you would validate the input and create a new user account
-  if (response.status === 200) {  
-    return { success: true }
-  } else {
-    return { error: "Invalid input" }
+  // console.log(parsedData.data)
+  try {
+    const response = await axios.post(`${BACKEND_URL}/signup`, {
+     name: parsedData.data.name,
+     email: parsedData.data.email,
+     password: parsedData.data.password,
+     fname: parsedData.data.fname
+    })
+    if (response.data) {
+      return { success: true }
+    } else {
+      return { error: "Sign-up failed" }
+    }
+  } catch (error) {
+    console.error(error)
+    return { error: "An error occurred during sign-up" }
   }
 }
-

@@ -48,10 +48,16 @@ importers:
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.2.0
+      '@repo/zod-types':
+        specifier: workspace:*
+        version: link:../../packages/zod-types
       '@types/node':
         specifier: ^20
         version: 20.17.6

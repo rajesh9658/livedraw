@@ -16,5 +16,5 @@ export const roomschema = z.object({
 
 export const loginschema = z.object({
     email:z.string().email(),
-    password:z.string().min(5).max(15).regex(/^[a-zA-Z0-9]{3,30}$/),
+    password: z.string().min(5).max(15).regex(/^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{5,15}$/),
 })

@@ -1,15 +1,17 @@
-"use client"
 
-import { useState } from "react"
+
 import Canvas from "../../../components/ui/canvas"
 
-export default function CanvasPage() {
- 
-const roomId = (await param).roomid
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ roomId: string }>;
+}) {
+  const param = await params;
+
   return (
     <div>
-      <Canvas  />
+      <Canvas />
     </div>
-  )
+  );
 }
-
