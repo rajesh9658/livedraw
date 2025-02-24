@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import styles from "./TextInputOverlay.module.css";
 
+
 interface TextInputOverlayProps {
   x: number;
   color: string;

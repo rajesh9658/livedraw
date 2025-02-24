@@ -1,6 +1,6 @@
 export interface wsdata{
     type: "message"|"join_room"|"leave_room";
-    roonId:number;
+    roomId:number;
     message:string;
-    dbconnection?:boolean;
+    db?:boolean;
 }

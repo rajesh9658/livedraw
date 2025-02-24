@@ -1,5 +1,5 @@
 
-
+import ExcaliSketch from "../../../components/ui/excelidraw"
 import Canvas from "../../../components/ui/canvas"
 
 export default async function HomePage({
@@ -11,7 +11,8 @@ export default async function HomePage({
 
   return (
     <div>
-      <Canvas />
+      {/* <Canvas /> */}
+      <ExcaliSketch roomId={parseInt(param.roomId)} />
     </div>
   );
 }

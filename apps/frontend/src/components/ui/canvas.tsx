@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { Square, Circle, Pencil, Eraser, Undo, Download, Maximize2, ZoomIn, ZoomOut, Move } from 'lucide-react';
 

@@ -1,4 +1,4 @@
-// src/components/Canvas.tsx
+// src/components/ui/Canvas.tsx
 "use client";
 import React, { useRef, useEffect } from "react";
 import { Shape } from "../../DrawModel/Shapes";
