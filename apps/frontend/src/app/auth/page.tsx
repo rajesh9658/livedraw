@@ -1,4 +1,4 @@
-import { AuthLayout } from "../../components/ui/Authlayout"
+import { AuthLayout } from "../../components/Authlayout"
 
 export default function AuthPage() {
   return <AuthLayout />

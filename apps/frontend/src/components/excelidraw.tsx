@@ -2,7 +2,7 @@
 "use client";
 import {wsdata as wsData } from "@/DrawModel/wsdata";
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { Shape, tools as Tool } from "../../DrawModel/Shapes";
+import { Shape, tools as Tool } from "../DrawModel/Shapes";
 import Toolbar from "./Toolbar";
 import Canvas from "./canvas2";
 import TextInputOverlay from "./TextInputOverlay";
@@ -12,8 +12,8 @@ import {
   getResizeHandleAtPoint,
   getBendHandle,
   inverseRotatePoint,
-} from "../../utils/canvasutils";
-import { useSocket } from "../../hooks/useSocket";
+} from "../utils/canvasutils";
+import { useSocket } from "../hooks/useSocket";
 import { getCursorStyle } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 import { routeModule } from "next/dist/build/templates/pages";

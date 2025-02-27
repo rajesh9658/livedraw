@@ -1,8 +1,8 @@
 // src/components/ui/Canvas.tsx
 "use client";
 import React, { useRef, useEffect } from "react";
-import { Shape } from "../../DrawModel/Shapes";
-import { drawCurrentShape, drawExistingShapes } from "../../utils/drwingutils";
+import { Shape } from "../DrawModel/Shapes";
+import { drawCurrentShape, drawExistingShapes } from "../utils/drwingutils";
 import TextInputOverlay from "./TextInputOverlay";
 
 interface CanvasProps {
