@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
-import { ThemeToggle } from "@/components/ui/themetogle";
+import { ThemeToggle } from "@/components/themetogle";
 
 function HeroCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
