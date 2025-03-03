@@ -101,7 +101,7 @@ app.post('/room/create',middleware,async(req:Request,res:Response)=>{
   }
   //@ts-ignore
   const userId = req.userId;
-  // console.log(userId);
+  console.log(userId);
  try {
   const room = await prismaClient.room.create({
     data:{
@@ -193,6 +193,6 @@ app.get('/room/:slug',async(req:Request,res:Response,)=>{
 
 
 
-app.listen(3002, () => {
-  console.log('listening on port 3002');
+app.listen(5000, () => {
+  console.log('listening on port 5000');
 });
