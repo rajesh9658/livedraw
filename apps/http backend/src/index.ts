@@ -127,7 +127,7 @@ app.post('/room/create',middleware,async(req:Request,res:Response)=>{
 
 //room list logic
 app.get ('/room/list',middleware,async (req:Request,res:Response,next:NextFunction) =>{
-  //@ts-ignore
+  
   const userId = req.body.userId;
   try {
     const rooms = await prismaClient.room.findMany({

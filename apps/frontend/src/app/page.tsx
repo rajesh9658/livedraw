@@ -101,9 +101,12 @@ export default function Home() {
                 Start Building <ArrowRight className="w-5 h-5" />
               </Button>
               </Link>
+              <Link href={`https://github.com/rajesh9658/livedraw.git`} >
               <Button size="lg" variant="outline" className="gap-2 backdrop-blur-sm">
                 Github
               </Button>
+              </Link>
+
             </div>
             <div className="mt-12 flex items-center justify-center gap-8 text-muted-foreground">
               <div className="flex items-center gap-2">
