@@ -40,6 +40,7 @@ interface Room {
 export default function Dashboard() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [newRoomName, setNewRoomName] = useState("");
+  const [description, setdescription] = useState("");
   const [joinRoomName, setJoinRoomName] = useState("");
   const [loading, setLoading] = useState(true);
   const [roomToDelete, setRoomToDelete] = useState<string | null>(null);
@@ -50,15 +51,15 @@ export default function Dashboard() {
   const createRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!token) {
-      router.push("/auth/sign-in");
+      router.push("/auth");
     } else {
       fetchRooms();
     }
   }, [token]);
 
-  const fetchRooms = async () => {
+  const fetchRooms = async (): Promise<void> => {
     try {
-      const url = `${BACKEND_URL}/user/rooms`;
+      const url = `${BACKEND_URL}/room/list`;
       const res = await axios.get(url, {
         headers: { authorization: ` ${token}` },
       });
@@ -88,38 +89,65 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-//create room function
+
+  //create room function
   const createRoom = async () => {
     try {
-      const url = `${BACKEND_URL}/room/create/${newRoomName}`;
-      console.log(token);
+      if (!newRoomName || !description) {
+        throw new Error("Room name and description are required");
+      }
+
+      const url = `${BACKEND_URL}/room/create`;
       const res = await axios.post(
         url,
-        {},
-        { headers: { authorization: `${token}` } }
-        
+        {
+          name: newRoomName,
+          description: description,
+          slug: newRoomName.replace(/\s+/g, "-").toLowerCase(),
+        },
+        {
+          headers: {
+            Authorization: `${token}`, // Optional: use `Bearer ${token}` if your backend expects it that way
+          },
+        }
       );
-      console.log(res);
+      // console.log(res.data);
       const data = res.data;
       if (!data.room) {
         throw new Error("Room creation failed");
       }
-      setRooms([data.room, ...rooms]);
+      fetchRooms(); // Refresh the room list after creation
+      // Ensure the new room object has all required fields
+      const newRoom: Room = {
+        id: data.room.id,
+        slug: data.room.slug,
+        createdAt: data.room.createdAt, // Ensure this is a valid ISO date string
+      };
+
+      setRooms([ ...rooms]);
       setNewRoomName("");
+      setdescription("");
       toast({
         title: "Success",
         description: "Room created successfully",
       });
     } catch (error) {
       setNewRoomName("");
+      setdescription("");
+      const errorMessage =
+        axios.isAxiosError(error) && error.response?.data?.message
+          ? error.response.data.message
+          : "Room with the same name already exists";
+
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Room with same name already Exists",
+        description: errorMessage,
       });
     }
   };
-//join room function
+
+  //join room function
   const joinRoom: (roomname?: string) => Promise<void> = async (
     roomname?: string
   ) => {
@@ -187,6 +215,7 @@ export default function Dashboard() {
     logout();
   };
 
+  
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -250,12 +279,23 @@ export default function Dashboard() {
                     value={newRoomName}
                     onChange={(e) => setNewRoomName(e.target.value)}
                   />
+                  <DialogHeader>
+                    <DialogTitle>Description</DialogTitle>
+                    <DialogDescription>
+                      Enter a description for your new room.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <Input
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setdescription(e.target.value)}
+                  />
                   <DialogFooter>
                     <DialogClose asChild>
                       <Button
                         ref={createRef}
                         onClick={createRoom}
-                        disabled={!newRoomName.trim()}
+                        disabled={!newRoomName.trim()|| !description.trim()}
                       >
                         Create
                       </Button>

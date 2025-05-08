@@ -1,6 +1,6 @@
 
-import ExcaliSketch from "../../../components/ui/excelidraw"
-import Canvas from "../../../components/ui/canvas"
+import ExcaliSketch from "../../../components/excelidraw"
+import Canvas from "../../../components/canvas"
 
 export default async function HomePage({
   params,

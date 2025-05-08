@@ -91,7 +91,8 @@ app.post('/signin', async(req,res)=>{
 //room logic
 app.post('/room/create',middleware,async(req:Request,res:Response)=>{
   const parseddata = roomschema.safeParse(req.body);
-
+//  console.log(parseddata.success);
+//   console.log(parseddata.error);
   if( !parseddata.success){
     res.status(400).json({
       message:parseddata.error.message,
@@ -107,7 +108,7 @@ app.post('/room/create',middleware,async(req:Request,res:Response)=>{
     data:{
       name:parseddata.data.name,
       description:parseddata.data.description,
-      slug:parseddata.data.slug,
+      slug:parseddata.data.name.replace(/\s+/g, '-').toLowerCase(),
       adminId:userId.toString(),
     }
   })
